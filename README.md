@@ -77,3 +77,35 @@ prepend a `0,` to each row of your data.
 - Set format to csv, set columns enclosed with to blank
 - Check "Update data when duplicate keys found on import" 
 
+
+## Showing recent Direct Deposits in your Admin
+
+I updated admin/index_dashboard.php to show recent direct deposits, 
+so I could be sure I had correctly logged them.  Put this block of
+code at the bottom of the file. 
+
+~~~~
+<div id="colthree" class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+    <div class="reportBox">
+        <div class="header"><?php echo "Recent Direct Deposits"; ?> </div>
+        <?php
+        require_once(DIR_WS_CLASSES . 'currencies.php');
+        $currencies = new currencies();
+        $orders = $db->Execute( "SELECT * FROM " . TABLE_DIRECT_DEPOSIT . " ORDER BY deposit_date DESC LIMIT 5"); 
+        while (!$orders->EOF) {
+            ?>
+            <div class="row">
+                <span class="left">
+                        <?php echo substr($orders->fields['name'], 0, 20); ?>
+                </span>
+                <span class="center"><?php echo $currencies->format($orders->fields['amount']); ?></span>
+                <span class="left"><?php echo $orders->fields['deposit_date']; ?></span>
+            </div>
+        <?php 
+            $orders->MoveNext(); 
+         } 
+         ?>
+    </div>
+</div>
+~~~~
+
