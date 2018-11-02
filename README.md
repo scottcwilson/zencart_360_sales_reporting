@@ -77,6 +77,15 @@ prepend a `0,` to each row of your data.
 - Set format to csv, set columns enclosed with to blank
 - Check "Update data when duplicate keys found on import" 
 
+## Importing Direct Deposits
+To add new direct deposits to your database, use phpMyAdmin and import a 
+CSV, with each deposit on one line.  Here's a CSV showing a payment of $1,000 from 
+Wiley Coyote of Acme Industries on Oct 1, 2018: 
+
+`0,"2018-10-01","Acme","Wiley.Coyote@acme.com",1000 `
+
+Note that the date is in YYYY-MM-DD format, and the line starts with `0,` - this is a placeholder for the `deposit_id` field.  Be sure to check the  "Update data when duplicate keys found on import (add ON DUPLICATE KEY UPDATE)" box in phpMyAdmin when you are uploading this csv.
+
 
 ## Showing recent Direct Deposits in your Admin
 
